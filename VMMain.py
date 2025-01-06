@@ -38,6 +38,17 @@ def init_stores(plane_data, pathes):
 
 stores = init_stores(plane_stores, datas.store_path)
 
+def get_highest_revenue():
+    highest_revenue = 0
+    for store in stores:
+        total_revenue = sum(store.revenues)
+        if total_revenue > highest_revenue:
+            highest_revenue = total_revenue
+            highest_store = store
+    return highest_store
+
+highest_store = get_highest_revenue()
+
 #Daten verarbeitung
 def write_to_console():
     highest_revenue_day = {}
