@@ -10,3 +10,4 @@ class CSV:
     def get_all_data_paths(self, url):
         list_url = glob.glob(url)
         return list_url
+

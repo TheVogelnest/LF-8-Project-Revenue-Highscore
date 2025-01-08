@@ -1,5 +1,8 @@
+import sys
+
 import MStore as st
 import re
+from tkinter import messagebox
 
 datas = st.StoreDatas()
 datas.dictionary_path = 'Umsätze/*.csv'
@@ -8,6 +11,7 @@ datas.store_path = st.get_store_path(datas.dictionary_path)
 plane_stores = []
 plane_stores = st.get_store_datas(datas.store_path)
 
+#für GUI out of Hell
 tempName = None
 
 #Hell Gui überprüfungen
@@ -20,9 +24,9 @@ def convert_binary_to_letter(string_binary):
     for i in range(0, len(string_binary), n):
         array_byte.append(string_binary[i:i+n])
     for byte in array_byte:
-        ascii_name += chr(int(byte, 2))
+        ascii_name += chr(int(byte, 2)) # 2 repräsentiert hier Binär // Hier wird der 8er Block Binärer Zahlen
+        # in einen char nach ASCII konvertiert
     return ascii_name
-
 
 #Daten aufarbeitung
 def init_stores(plane_data, pathes):
@@ -36,7 +40,11 @@ def init_stores(plane_data, pathes):
         temp_list.append(cur_store)
     return temp_list
 
-stores = init_stores(plane_stores, datas.store_path)
+if len(datas.store_path) > 0:
+    stores = init_stores(plane_stores, datas.store_path)
+else:
+    messagebox.showerror('Error', 'Keine Dateien im Umsatzordner gefunden') #überprüfen ob der Ordner leer ist
+    sys.exit()
 
 def get_highest_revenue():
     highest_revenue = 0
@@ -69,11 +77,6 @@ def write_to_console():
 
     def print_option_a():
         for day, info in highest_revenue_day.items():
-            tem_stores = []
-            for i, store in enumerate(stores):
-                if info['name'] == store.name:
-                    stores[i].highscore += 1
-                tem_stores.append(store)
             print(f"Am {day} hatte {info['name']} den höchsten Umsatz mit {info['revenues']} Euro.")
     def print_option_b():
         for day, info in highest_revenue_day.items():
@@ -87,7 +90,9 @@ def write_to_console():
 
     if option.lower() == 'a':
         print_option_a()
-    else:
+    elif option.lower() == 'b':
         print_option_b()
+    else:
+        print("Unzulässige Eingabe!")
 
 

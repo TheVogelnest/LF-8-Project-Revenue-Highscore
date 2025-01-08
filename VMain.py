@@ -18,7 +18,6 @@ style = ttk.Style()
 def fixed_map(option):
         # Returns the style map for 'option' with any styles starting with
         # ("!disabled", "!selected", ...) filtered out
-
         # style.map() returns an empty list for missing options, so this should
         # be future-safe
         return [elm for elm in style.map("Treeview", query_opt=option)
@@ -76,6 +75,7 @@ def open_login_window():
             vm.tempName = name
             messagebox.showerror('Error', 'Nur die binäre schreibweise ist erlaubt')
 
+    #Login Window designen
     login_window.lower()
     login_window.title("Login")
     login_window.geometry("300x150")
